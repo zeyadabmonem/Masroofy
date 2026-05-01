@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import BudgetCycle
-from datetime import date
 
 
 class BudgetCycleSerializer(serializers.ModelSerializer):
@@ -11,8 +10,8 @@ class BudgetCycleSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         if data.get('end_date') and data.get('start_date'):
-            if data['end_date'] <= data['start_date']:
-                raise serializers.ValidationError("End date must be after start date.")
+            if data['end_date'] < data['start_date']:
+                raise serializers.ValidationError("End date must be on or after start date.")
         return data
 
     def validate_total_allowance(self, value):
@@ -30,3 +29,5 @@ class BudgetSummarySerializer(serializers.Serializer):
     days_elapsed = serializers.IntegerField()
     safe_daily_limit = serializers.DecimalField(max_digits=12, decimal_places=2)
     spending_percentage = serializers.DecimalField(max_digits=5, decimal_places=2)
+    alert_level = serializers.ChoiceField(choices=['NONE', 'WARNING', 'EXHAUSTED'])
+    cycle_status = serializers.ChoiceField(choices=['PENDING', 'ACTIVE', 'EXPIRED'])
