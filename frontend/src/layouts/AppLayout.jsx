@@ -3,6 +3,7 @@ import Sidebar from '../components/navigation/Sidebar'
 import BottomNav from '../components/navigation/BottomNav'
 import ToastContainer from '../components/feedback/ToastContainer'
 import AddTransactionModal from '../features/transactions/AddTransactionModal'
+import CreateCycleModal from '../features/budget/CreateCycleModal'
 
 const AppLayout = () => {
   return (
@@ -21,6 +22,7 @@ const AppLayout = () => {
 
       {/* Global Modals */}
       <AddTransactionModal />
+      <CreateCycleModal />
 
       {/* Global Toasts */}
       <ToastContainer />

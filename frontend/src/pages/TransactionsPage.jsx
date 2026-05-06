@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
-import { Search, Filter, Plus, Trash2, Pencil } from 'lucide-react'
+import { Search, Plus, Trash2, Pencil } from 'lucide-react'
 import Card from '../components/ui/Card'
-import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import Badge from '../components/ui/Badge'
 import EmptyState from '../components/feedback/EmptyState'
 import LoadingState from '../components/feedback/LoadingState'
 import { useTransactions } from '../hooks/useTransactions'
+import { useBudget } from '../hooks/useBudget'
 import { useUIStore } from '../store/useUIStore'
+import { Wallet } from 'lucide-react'
+import { clsx } from 'clsx'
 
 const CATEGORY_LABELS = {
   FOOD: '🍔 Food',
@@ -31,17 +33,35 @@ const groupByDate = (transactions) => {
 
 const TransactionsPage = () => {
   const { transactions, fetchTransactions, removeTransaction, applyFilters } = useTransactions()
+  const { activeCycle } = useBudget()
   const { isLoading, openModal } = useUIStore()
   const [search, setSearch] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('ALL')
 
   useEffect(() => {
     fetchTransactions()
   }, [])
 
-  const handleSearch = (e) => {
+  if (!activeCycle && !isLoading) {
+    return (
+      <EmptyState
+        icon={Wallet}
+        title="No Active Budget"
+        description="You need an active budget cycle to view or log transactions."
+        action={<Button onClick={() => openModal('CREATE_CYCLE')}>Create Budget</Button>}
+      />
+    )
+  }
+
+  const handleSearchChange = (e) => {
     const val = e.target.value
     setSearch(val)
-    applyFilters({ search: val })
+    applyFilters({ search: val, category: selectedCategory === 'ALL' ? undefined : selectedCategory })
+  }
+
+  const handleFilterChange = (cat) => {
+    setSelectedCategory(cat)
+    applyFilters({ search, category: cat === 'ALL' ? undefined : cat })
   }
 
   const grouped = groupByDate(transactions)
@@ -60,14 +80,46 @@ const TransactionsPage = () => {
       </header>
 
       {/* Search & Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="flex-1">
-          <Input placeholder="Search by note..." icon={Search} value={search} onChange={handleSearch} />
+      <div className="flex flex-col gap-4">
+        {/* Search Bar */}
+        <div className="relative max-w-md">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
+          <input 
+            className="w-full bg-bg-elevated border border-border rounded-xl py-3 pl-11 pr-4 text-sm focus:outline-none focus:border-accent transition-colors text-text-primary placeholder:text-text-muted"
+            placeholder="Search expenses by note..." 
+            value={search} 
+            onChange={handleSearchChange} 
+          />
         </div>
-        <Button variant="secondary">
-          <Filter size={18} className="mr-2" />
-          Category
-        </Button>
+
+        {/* Category Pills */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
+          <button
+            onClick={() => handleFilterChange('ALL')}
+            className={clsx(
+              "px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all border",
+              selectedCategory === 'ALL' 
+                ? "bg-text-primary text-bg-primary shadow-sm border-text-primary" 
+                : "bg-bg-elevated text-text-secondary hover:bg-bg-secondary hover:text-text-primary border-border"
+            )}
+          >
+            All Categories
+          </button>
+          {Object.entries(CATEGORY_LABELS).map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => handleFilterChange(key)}
+              className={clsx(
+                "px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all border",
+                selectedCategory === key
+                  ? "bg-accent/10 text-accent border-accent/20"
+                  : "bg-bg-elevated text-text-secondary hover:bg-bg-secondary hover:text-text-primary border-border"
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {isLoading ? (

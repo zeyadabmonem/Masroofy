@@ -43,7 +43,7 @@ const NotificationBell = () => {
 
       {/* Panel */}
       {open && (
-        <div className="absolute right-0 top-12 w-96 bg-bg-secondary border border-border rounded-3xl shadow-2xl z-50 overflow-hidden animate-scale-in">
+        <div className="absolute left-0 top-12 w-96 bg-bg-secondary border border-border rounded-3xl shadow-2xl z-50 overflow-hidden animate-scale-in">
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <div className="flex items-center gap-2">

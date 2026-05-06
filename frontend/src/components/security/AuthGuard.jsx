@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Lock, Fingerprint, KeyRound } from 'lucide-react'
-import { securityService } from '../services/securityService'
-import Button from './ui/Button'
+import { securityService } from '../../services/securityService'
+import Button from '../ui/Button'
 import { clsx } from 'clsx'
 
 const AuthGuard = ({ children }) => {

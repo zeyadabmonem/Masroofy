@@ -2,16 +2,19 @@ import { useEffect } from 'react'
 import { PieChart, BarChart2, TrendingUp, Wallet } from 'lucide-react'
 import Card from '../components/ui/Card'
 import StatCard from '../components/ui/StatCard'
+import Button from '../components/ui/Button'
 import EmptyState from '../components/feedback/EmptyState'
 import SpendingPieChart from '../components/charts/SpendingPieChart'
 import DailySpendingBar from '../components/charts/DailySpendingBar'
 import { useAnalytics } from '../hooks/useAnalytics'
 import { useBudgetStore } from '../store/useBudgetStore'
+import { useUIStore } from '../store/useUIStore'
 import { formatCurrency } from '../utils/currency'
 
 const AnalyticsPage = () => {
   const { categoryBreakdown, dailySpending, fetchAll } = useAnalytics()
   const { activeCycle, summary } = useBudgetStore()
+  const { openModal } = useUIStore()
 
   useEffect(() => {
     if (activeCycle) fetchAll()
@@ -23,6 +26,7 @@ const AnalyticsPage = () => {
         icon={BarChart2}
         title="No Budget Active"
         description="Create a budget cycle first to view your spending analytics."
+        action={<Button onClick={() => openModal('CREATE_CYCLE')}>Create Budget</Button>}
       />
     )
   }

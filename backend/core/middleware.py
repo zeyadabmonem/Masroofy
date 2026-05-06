@@ -1,5 +1,6 @@
 import logging
 from django.http import JsonResponse
+from django.conf import settings
 from rest_framework.views import exception_handler
 from rest_framework import status
 from core.response import standard_response
@@ -27,7 +28,7 @@ class APIExceptionHandlerMiddleware:
             "success": False,
             "data": None,
             "message": "An internal server error occurred.",
-            "errors": {"server": [str(exception)] if request.debug else ["Please contact support."]}
+            "errors": {"server": [str(exception)] if settings.DEBUG else ["Please contact support."]}
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 def custom_exception_handler(exc, context):

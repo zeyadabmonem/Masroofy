@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useTransactions } from '../../hooks/useTransactions'
 import { useUIStore } from '../../store/useUIStore'
-import Modal from '../ui/Modal'
-import Button from '../ui/Button'
-import Input from '../ui/Input'
+import Modal from '../../components/ui/Modal'
+import Button from '../../components/ui/Button'
+import Input from '../../components/ui/Input'
 
 const CATEGORIES = [
   { value: 'FOOD', label: '🍔 Food & Dining' },
@@ -17,7 +17,7 @@ const CATEGORIES = [
 
 const AddTransactionModal = () => {
   const { modal, closeModal } = useUIStore()
-  const { logExpense, editTransaction } = useTransactions()
+  const { logExpense, editTransaction, removeTransaction } = useTransactions()
 
   const isEdit = modal.type === 'EDIT_TRANSACTION'
   const existing = modal.data
@@ -53,18 +53,34 @@ const AddTransactionModal = () => {
     setLoading(false)
   }
 
+  const handleDelete = async () => {
+    if (confirm('Are you sure you want to delete this expense?')) {
+      setLoading(true)
+      await removeTransaction(existing.id)
+      setLoading(false)
+      closeModal()
+    }
+  }
+
   return (
     <Modal
       isOpen={modal.isOpen && (modal.type === 'ADD_TRANSACTION' || isEdit)}
       onClose={closeModal}
       title={isEdit ? 'Edit Expense' : 'Log New Expense'}
       footer={
-        <>
-          <Button variant="ghost" onClick={closeModal} disabled={loading}>Cancel</Button>
-          <Button onClick={handleSubmit} loading={loading}>
-            {isEdit ? 'Save Changes' : 'Log Expense'}
-          </Button>
-        </>
+        <div className="flex justify-between w-full">
+          {isEdit ? (
+            <Button variant="danger" onClick={handleDelete} disabled={loading}>Delete</Button>
+          ) : (
+            <div></div> // Spacer
+          )}
+          <div className="flex gap-2">
+            <Button variant="ghost" onClick={closeModal} disabled={loading}>Cancel</Button>
+            <Button onClick={handleSubmit} loading={loading}>
+              {isEdit ? 'Save Changes' : 'Log Expense'}
+            </Button>
+          </div>
+        </div>
       }
     >
       <form onSubmit={handleSubmit} className="space-y-6">
