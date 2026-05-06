@@ -62,7 +62,7 @@ export const getCycleStatus = (startDate, endDate) => {
  * If remaining days = 0 (last day), returns the remaining balance directly.
  */
 export const computeDailyLimit = (remainingBalance, remainingDays) => {
-  if (remainingDays === 0) return Math.max(remainingBalance, 0)
+  if (remainingDays <= 0) return 0
   if (remainingBalance <= 0) return 0
   return remainingBalance / remainingDays
 }

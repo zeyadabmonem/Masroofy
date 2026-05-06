@@ -32,6 +32,7 @@ export const useBudget = () => {
       const res = await budgetService.createCycle(data)
       if (res?.data) {
         setActiveCycle(res.data)
+        clearTransactions() // Clear old transactions from local store
         addToast('Budget cycle created!', 'success')
         return true
       }

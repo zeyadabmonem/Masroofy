@@ -12,8 +12,8 @@ const AuthGuard = ({ children }) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    // Check if user already has a valid token
-    const token = localStorage.getItem('masroofy_access_token')
+    // Check if user already has a valid token in this session
+    const token = sessionStorage.getItem('masroofy_access_token')
     if (token) {
       setIsAuthenticated(true)
       return
@@ -47,7 +47,7 @@ const AuthGuard = ({ children }) => {
       } else {
         const res = await securityService.setupPIN(pin)
         if (res?.data?.access) {
-          localStorage.setItem('masroofy_access_token', res.data.access)
+          sessionStorage.setItem('masroofy_access_token', res.data.access)
           setIsAuthenticated(true)
         }
       }
