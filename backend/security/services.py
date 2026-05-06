@@ -70,3 +70,21 @@ class AuthService:
             profile.last_failed_attempt = timezone.now()
             profile.save()
             raise BusinessLogicException("Invalid PIN.")
+
+    @staticmethod
+    def change_pin(user, old_pin: str, new_pin: str) -> dict:
+        try:
+            profile = SecurityProfile.objects.get(user=user)
+        except SecurityProfile.DoesNotExist:
+            raise BusinessLogicException("Security profile not found.")
+            
+        if not bcrypt.checkpw(old_pin.encode('utf-8'), profile.pin_hash.encode('utf-8')):
+            raise BusinessLogicException("Invalid old PIN.")
+            
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(new_pin.encode('utf-8'), salt)
+        
+        profile.pin_hash = hashed.decode('utf-8')
+        profile.save()
+        
+        return {"message": "PIN changed successfully."}

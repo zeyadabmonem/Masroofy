@@ -93,3 +93,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 50,
 }
+
+# Security Settings
+MAX_PIN_ATTEMPTS = config('MAX_PIN_ATTEMPTS', default=5, cast=int)
+PIN_LOCKOUT_MINUTES = config('PIN_LOCKOUT_MINUTES', default=15, cast=int)

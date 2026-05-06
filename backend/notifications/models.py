@@ -1,15 +1,10 @@
 from django.db import models
 from budgets.models import BudgetCycle
+from core.constants import NOTIFICATION_TYPES
 
 class NotificationLog(models.Model):
-    TYPE_CHOICES = [
-        ('WARNING_80', '80% Budget Used'),
-        ('EXHAUSTED', 'Budget Exhausted'),
-        ('SYSTEM', 'System Alert'),
-    ]
-
     cycle = models.ForeignKey(BudgetCycle, on_delete=models.CASCADE, related_name='notifications', null=True, blank=True)
-    notification_type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES)
     message = models.CharField(max_length=255)
     is_dismissed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
