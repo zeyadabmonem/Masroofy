@@ -12,7 +12,7 @@ const apiClient = axios.create({
 // Attach JWT token to every outgoing request
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('masroofy_access_token')
+    const token = sessionStorage.getItem('masroofy_access_token')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -31,7 +31,7 @@ apiClient.interceptors.response.use(
 
       // 401 → clear token and reload to trigger PIN lock screen
       if (status === 401) {
-        localStorage.removeItem('masroofy_access_token')
+        sessionStorage.removeItem('masroofy_access_token')
         window.location.reload()
       }
 
