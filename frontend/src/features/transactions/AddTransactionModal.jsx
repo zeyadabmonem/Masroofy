@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTransactions } from '../../hooks/useTransactions'
 import { useUIStore } from '../../store/useUIStore'
 import Modal from '../../components/ui/Modal'
@@ -24,12 +24,24 @@ const AddTransactionModal = () => {
   const existing = modal.data
 
   const [form, setForm] = useState({
-    amount: existing?.amount || '',
-    category: existing?.category || 'FOOD',
-    note: existing?.note || '',
+    amount: '',
+    category: 'FOOD',
+    note: '',
   })
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
+
+  // Sync form with modal data when it opens or data changes
+  useEffect(() => {
+    if (modal.isOpen && (modal.type === 'ADD_TRANSACTION' || modal.type === 'EDIT_TRANSACTION')) {
+      setForm({
+        amount: existing?.amount || '',
+        category: existing?.category || 'FOOD',
+        note: existing?.note || '',
+      })
+      setErrors({})
+    }
+  }, [modal.isOpen, modal.type, existing])
 
   const validate = () => {
     const errs = {}

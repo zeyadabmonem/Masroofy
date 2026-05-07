@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Search, Plus, Trash2, Pencil } from 'lucide-react'
 import Card from '../components/ui/Card'
 import Button from '../components/ui/Button'
@@ -43,6 +43,18 @@ const TransactionsPage = () => {
     fetchTransactions()
   }, [])
 
+  // Debounce search and filters
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      applyFilters({ 
+        search, 
+        category: selectedCategory === 'ALL' ? undefined : selectedCategory 
+      })
+    }, 300)
+
+    return () => clearTimeout(timer)
+  }, [search, selectedCategory, applyFilters])
+
   if (!activeCycle && !isLoading) {
     return (
       <EmptyState
@@ -55,17 +67,14 @@ const TransactionsPage = () => {
   }
 
   const handleSearchChange = (e) => {
-    const val = e.target.value
-    setSearch(val)
-    applyFilters({ search: val, category: selectedCategory === 'ALL' ? undefined : selectedCategory })
+    setSearch(e.target.value)
   }
 
   const handleFilterChange = (cat) => {
     setSelectedCategory(cat)
-    applyFilters({ search, category: cat === 'ALL' ? undefined : cat })
   }
 
-  const grouped = groupByDate(transactions)
+  const grouped = useMemo(() => groupByDate(transactions), [transactions])
 
   return (
     <div className="space-y-8 animate-fade-in">
