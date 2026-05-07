@@ -3,6 +3,7 @@ import { Home, History, PieChart, Settings, LogOut, ChevronLeft, ChevronRight } 
 import { NavLink } from 'react-router-dom'
 import { clsx } from 'clsx'
 import NotificationBell from './NotificationBell'
+import { securityService } from '../../services/securityService'
 
 const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false)
@@ -13,6 +14,12 @@ const Sidebar = () => {
     { name: 'Analytics', icon: PieChart, path: '/analytics' },
     { name: 'Settings', icon: Settings, path: '/settings' },
   ]
+
+  const handleLogout = () => {
+    securityService.logout()
+    window.location.reload()
+  }
+
 
   return (
     <aside 
@@ -66,6 +73,7 @@ const Sidebar = () => {
       <div className="p-4 border-t border-border">
         <button 
           title="Lock Vault"
+          onClick={handleLogout}
           className={clsx(
             "flex items-center gap-3 py-3 rounded-xl text-danger hover:bg-danger/10 transition-colors font-medium",
             isCollapsed ? "justify-center px-0 w-full" : "px-4 w-full"
@@ -78,5 +86,6 @@ const Sidebar = () => {
     </aside>
   )
 }
+
 
 export default Sidebar

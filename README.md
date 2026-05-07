@@ -42,7 +42,25 @@ Follow these steps to run Masroofy locally on your machine.
 - Node.js (v18+)
 - Python (3.10+)
 
-### 1. Backend Setup
+---
+
+### ⚡ One-Click Quick Start (Windows Only)
+
+For the fastest and easiest way to start the application, simply use the provided batch script.
+
+1. Open your File Explorer.
+2. Navigate to the root of the `Masroofy` project directory.
+3. Double-click the **`run.bat`** file.
+
+*This script will automatically open two terminal windows, securely activate your Python virtual environment, start the Django backend, and launch the React frontend development server simultaneously.*
+
+---
+
+### 💻 Manual Setup (Cross-Platform)
+
+If you prefer to run the application manually from your terminal, follow these steps:
+
+#### 1. Backend Setup
 
 Open a terminal and navigate to the `backend` directory:
 
@@ -67,9 +85,9 @@ python manage.py migrate
 # Start the development server
 python manage.py runserver
 ```
-The backend will run at `http://127.0.0.1:8000/`.
+*The backend will run at `http://127.0.0.1:8000/`.*
 
-### 2. Frontend Setup
+#### 2. Frontend Setup
 
 Open a second terminal and navigate to the `frontend` directory:
 
@@ -82,7 +100,7 @@ npm install
 # Start the development server
 npm run dev
 ```
-The frontend will be available at `http://localhost:5173/`.
+*The frontend will be available at `http://localhost:5173/`.*
 
 ---
 

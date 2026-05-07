@@ -146,9 +146,10 @@ const DashboardPage = () => {
             {recentTransactions.map((tx) => (
               <Card key={tx.id} hover className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-bg-elevated rounded-2xl flex items-center justify-center text-text-muted text-lg">
-                    {tx.category === 'FOOD' ? '🍔' : tx.category === 'TRANSPORT' ? '🚗' : tx.category === 'SHOPPING' ? '🛍️' : tx.category === 'BILLS' ? '📄' : tx.category === 'ENTERTAINMENT' ? '🎮' : tx.category === 'EDUCATION' ? '📚' : '📦'}
+                  <div className="w-12 h-12 bg-bg-elevated rounded-2xl flex items-center justify-center text-text-muted">
+                    <Wallet size={24} />
                   </div>
+
                   <div>
                     <p className="font-bold text-text-primary">{tx.note || CATEGORY_LABELS[tx.category]}</p>
                     <div className="flex items-center gap-2">

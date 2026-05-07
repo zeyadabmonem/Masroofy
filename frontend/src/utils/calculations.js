@@ -13,7 +13,12 @@
 
 const MS_PER_DAY = 1000 * 60 * 60 * 24
 
-/** Strips time from a Date, returning midnight local time */
+/**
+ * Strips time from a Date object, returning a new Date at midnight local time.
+ * 
+ * @param {Date|string} d - The date to process.
+ * @returns {Date} Date object set to 00:00:00:000.
+ */
 const midnight = (d) => {
   const date = new Date(d)
   date.setHours(0, 0, 0, 0)
@@ -22,7 +27,10 @@ const midnight = (d) => {
 
 /**
  * Calculates the number of days between two dates, inclusive of both ends.
- * Returns 0 if end < start.
+ * 
+ * @param {Date|string} start - The start date.
+ * @param {Date|string} end - The end date.
+ * @returns {number} The count of days (e.g., May 1 to May 2 is 2 days). Returns 0 if end < start.
  */
 export const daysBetweenInclusive = (start, end) => {
   const s = midnight(start)
@@ -32,8 +40,10 @@ export const daysBetweenInclusive = (start, end) => {
 }
 
 /**
- * Calculates days from today to end_date, inclusive of today.
- * Returns 0 if end_date is in the past.
+ * Calculates days from today to the given end_date, inclusive of today.
+ * 
+ * @param {Date|string} endDate - The target end date.
+ * @returns {number} Remaining days including today. Returns 0 if end_date is in the past.
  */
 export const remainingDaysInclusive = (endDate) => {
   const today = midnight(new Date())
@@ -43,8 +53,11 @@ export const remainingDaysInclusive = (endDate) => {
 }
 
 /**
- * Determines the status of a budget cycle based on dates.
- * @returns 'PENDING' | 'ACTIVE' | 'EXPIRED'
+ * Determines the status of a budget cycle based on dates relative to today.
+ * 
+ * @param {Date|string} startDate - Cycle start date.
+ * @param {Date|string} endDate - Cycle end date.
+ * @returns {'PENDING' | 'ACTIVE' | 'EXPIRED'} The calculated status.
  */
 export const getCycleStatus = (startDate, endDate) => {
   const today = midnight(new Date())
@@ -57,21 +70,38 @@ export const getCycleStatus = (startDate, endDate) => {
 }
 
 /**
- * Computes the safe daily limit.
- * If remaining balance is negative (overspent), returns 0 — you cannot "earn back" days.
- * If remaining days = 0 (last day), returns the remaining balance directly.
+ * Computes the safe daily limit (remaining balance divided by remaining days).
+ * 
+ * @param {number} remainingBalance - The amount of money left to spend.
+ * @param {number} remainingDays - The number of days remaining in the cycle.
+ * @returns {number} The daily budget limit. Returns 0 if overspent or if no days remain.
  */
 export const computeDailyLimit = (remainingBalance, remainingDays) => {
-  if (remainingDays === 0) return Math.max(remainingBalance, 0)
+  if (remainingDays <= 0) return 0
   if (remainingBalance <= 0) return 0
   return remainingBalance / remainingDays
 }
 
 /**
- * Core calculation function — computes the full budget summary.
- * @param {Object} cycle - { total_allowance, start_date, end_date }
- * @param {Array}  transactions - list of { amount } objects
- * @returns {Object} full summary
+ * Core calculation function that computes the full budget summary.
+ * 
+ * @param {Object} cycle - Budget cycle details.
+ * @param {number|string} cycle.total_allowance - Total budget for the cycle.
+ * @param {Date|string} cycle.start_date - Cycle start date.
+ * @param {Date|string} cycle.end_date - Cycle end date.
+ * @param {Array<Object>} transactions - List of transaction objects.
+ * @param {number|string} transactions[].amount - Amount of the transaction.
+ * @returns {Object} A summary object containing processed metrics:
+ *   - total_allowance (number)
+ *   - total_spent (number)
+ *   - remaining_balance (number)
+ *   - remaining_days (number)
+ *   - total_days (number)
+ *   - days_elapsed (number)
+ *   - safe_daily_limit (number)
+ *   - spending_percentage (number)
+ *   - alert_level ('NONE'|'WARNING'|'EXHAUSTED')
+ *   - cycle_status ('PENDING'|'ACTIVE'|'EXPIRED')
  */
 export const computeBudgetSummary = (cycle, transactions = []) => {
   const totalAllowance = parseFloat(cycle.total_allowance) || 0
@@ -107,3 +137,4 @@ export const computeBudgetSummary = (cycle, transactions = []) => {
     cycle_status: status,
   }
 }
+

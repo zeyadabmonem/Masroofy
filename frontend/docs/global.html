@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="DEFAULT_CURRENCY"><span class="type-signature">(constant) </span>DEFAULT_CURRENCY<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Currency formatting utilities for Masroofy.
+Centralizes all number display logic to avoid scattered .toFixed() calls.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_currency.js.html">utils/currency.js</a>, <a href="utils_currency.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="MS_PER_DAY"><span class="type-signature">(constant) </span>MS_PER_DAY<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Masroofy Daily Limit Calculation Engine
+Single source of truth for all financial computations on the frontend.
+
+Edge cases handled:
+- Cycle not started yet
+- Cycle already expired
+- Negative balance (overspending)
+- Zero-allowance cycles
+- Last day of cycle
+- Spending exactly at 100%
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line14">line 14</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="computeBudgetSummary"><span class="type-signature">(constant) </span>computeBudgetSummary<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Core calculation function that computes the full budget summary.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line106">line 106</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="computeDailyLimit"><span class="type-signature">(constant) </span>computeDailyLimit<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Computes the safe daily limit (remaining balance divided by remaining days).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="daysBetweenInclusive"><span class="type-signature">(constant) </span>daysBetweenInclusive<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Calculates the number of days between two dates, inclusive of both ends.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="formatAmount"><span class="type-signature">(constant) </span>formatAmount<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Returns a raw formatted number string with 2 decimal places.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_currency.js.html">utils/currency.js</a>, <a href="utils_currency.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>formatAmount(99.9) → "99.90"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="formatCurrency"><span class="type-signature">(constant) </span>formatCurrency<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Formats a number as a currency string.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_currency.js.html">utils/currency.js</a>, <a href="utils_currency.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>formatCurrency(1234.5) → "1,234.50 EGP"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="formatCurrencyCompact"><span class="type-signature">(constant) </span>formatCurrencyCompact<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Formats a number as a compact currency string (no decimals for large values).
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_currency.js.html">utils/currency.js</a>, <a href="utils_currency.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>formatCurrencyCompact(15000) → "15,000 EGP"</code></pre>
+
+
+
+        
+            
+<h4 class="name" id="getCycleStatus"><span class="type-signature">(constant) </span>getCycleStatus<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Determines the status of a budget cycle based on dates relative to today.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line62">line 62</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="remainingDaysInclusive"><span class="type-signature">(constant) </span>remainingDaysInclusive<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Calculates days from today to the given end_date, inclusive of today.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line48">line 48</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="AuthGuard"><span class="type-signature"></span>AuthGuard<span class="signature">(props)</span><span class="type-signature"> &rarr; {React.ReactElement}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    AuthGuard Component
+
+Provides session-based security and PIN authentication for the application.
+It checks for a valid session token or requires the user to enter/setup a PIN
+before accessing protected children components.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>props</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Component props
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>children</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">React.ReactNode</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Protected components to render upon authentication</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="components_security_AuthGuard.jsx.html">components/security/AuthGuard.jsx</a>, <a href="components_security_AuthGuard.jsx.html#line19">line 19</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The authenticated content or the PIN entry screen
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">React.ReactElement</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="midnight"><span class="type-signature"></span>midnight<span class="signature">(d)</span><span class="type-signature"> &rarr; {Date}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Strips time from a Date object, returning a new Date at midnight local time.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Date</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The date to process.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="utils_calculations.js.html">utils/calculations.js</a>, <a href="utils_calculations.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Date object set to 00:00:00:000.
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Date</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateSummary"><span class="type-signature"></span>updateSummary<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Recomputes the full summary using the hardened calculation engine.
+Called every time transactions change.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="store_useBudgetStore.js.html">store/useBudgetStore.js</a>, <a href="store_useBudgetStore.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#AuthGuard">AuthGuard</a></li><li><a href="global.html#DEFAULT_CURRENCY">DEFAULT_CURRENCY</a></li><li><a href="global.html#MS_PER_DAY">MS_PER_DAY</a></li><li><a href="global.html#computeBudgetSummary">computeBudgetSummary</a></li><li><a href="global.html#computeDailyLimit">computeDailyLimit</a></li><li><a href="global.html#daysBetweenInclusive">daysBetweenInclusive</a></li><li><a href="global.html#formatAmount">formatAmount</a></li><li><a href="global.html#formatCurrency">formatCurrency</a></li><li><a href="global.html#formatCurrencyCompact">formatCurrencyCompact</a></li><li><a href="global.html#getCycleStatus">getCycleStatus</a></li><li><a href="global.html#midnight">midnight</a></li><li><a href="global.html#remainingDaysInclusive">remainingDaysInclusive</a></li><li><a href="global.html#updateSummary">updateSummary</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.5</a> on Thu May 07 2026 23:26:59 GMT+0300 (Eastern European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

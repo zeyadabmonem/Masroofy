@@ -8,14 +8,40 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from core.exceptions import BusinessLogicException
 
 class AuthService:
+    """
+    Service layer for handling authentication and security operations.
+    
+    This service manages user creation, PIN setup, verification, and lockout logic.
+    """
+
     @staticmethod
     def get_or_create_default_user():
+        """
+        Retrieves the default user profile or creates one if it doesn't exist.
+        
+        This is used for the single-user MVP version of Masroofy.
+        
+        Returns:
+            UserProfile: The default user profile object.
+        """
         # For single-user MVP, grab the first user or create one
         user, _ = UserProfile.objects.get_or_create(username="default_user", defaults={"display_name": "My Wallet"})
         return user
 
     @staticmethod
     def setup_pin(pin: str) -> dict:
+        """
+        Initializes a security PIN for the default user.
+        
+        Args:
+            pin (str): The plain-text PIN to be hashed and stored.
+            
+        Returns:
+            dict: A dictionary containing JWT 'access' and 'refresh' tokens.
+            
+        Raises:
+            BusinessLogicException: If a PIN is already configured for the user.
+        """
         user = AuthService.get_or_create_default_user()
         profile, _ = SecurityProfile.objects.get_or_create(user=user)
         
@@ -37,6 +63,20 @@ class AuthService:
 
     @staticmethod
     def verify_pin(pin: str) -> dict:
+        """
+        Verifies the provided PIN against the stored hash.
+        
+        Implements lockout logic after multiple failed attempts based on settings.
+        
+        Args:
+            pin (str): The plain-text PIN to verify.
+            
+        Returns:
+            dict: A dictionary containing JWT 'access' and 'refresh' tokens upon success.
+            
+        Raises:
+            BusinessLogicException: If PIN is incorrect, not setup, or account is locked.
+        """
         user = AuthService.get_or_create_default_user()
         try:
             profile = SecurityProfile.objects.get(user=user)
@@ -73,6 +113,20 @@ class AuthService:
 
     @staticmethod
     def change_pin(user, old_pin: str, new_pin: str) -> dict:
+        """
+        Updates the user's PIN after verifying the old one.
+        
+        Args:
+            user (UserProfile): The user requesting the change.
+            old_pin (str): The current PIN.
+            new_pin (str): The new PIN to be set.
+            
+        Returns:
+            dict: A success message.
+            
+        Raises:
+            BusinessLogicException: If the old PIN is invalid.
+        """
         try:
             profile = SecurityProfile.objects.get(user=user)
         except SecurityProfile.DoesNotExist:
@@ -88,3 +142,4 @@ class AuthService:
         profile.save()
         
         return {"message": "PIN changed successfully."}
+

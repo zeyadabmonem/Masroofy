@@ -4,6 +4,18 @@ import { securityService } from '../../services/securityService'
 import Button from '../ui/Button'
 import { clsx } from 'clsx'
 
+/**
+ * AuthGuard Component
+ * 
+ * Provides session-based security and PIN authentication for the application.
+ * It checks for a valid session token or requires the user to enter/setup a PIN
+ * before accessing protected children components.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {React.ReactNode} props.children - Protected components to render upon authentication
+ * @returns {React.ReactElement} The authenticated content or the PIN entry screen
+ */
 const AuthGuard = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [hasPinSetup, setHasPinSetup] = useState(null)
@@ -11,9 +23,13 @@ const AuthGuard = ({ children }) => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+  /**
+   * Effect hook to check initial authentication status.
+   * Verifies if an access token exists in sessionStorage or checks if a PIN is setup on the backend.
+   */
   useEffect(() => {
-    // Check if user already has a valid token
-    const token = localStorage.getItem('masroofy_access_token')
+    // Check if user already has a valid token in this session
+    const token = sessionStorage.getItem('masroofy_access_token')
     if (token) {
       setIsAuthenticated(true)
       return
@@ -31,6 +47,13 @@ const AuthGuard = ({ children }) => {
     checkStatus()
   }, [])
 
+  /**
+   * Handles the submission of the PIN form.
+   * Performs either PIN verification or PIN setup based on the current state.
+   * 
+   * @async
+   * @param {React.FormEvent} e - Form submission event
+   */
   const handlePinSubmit = async (e) => {
     e.preventDefault()
     if (pin.length < 4) {
@@ -47,7 +70,7 @@ const AuthGuard = ({ children }) => {
       } else {
         const res = await securityService.setupPIN(pin)
         if (res?.data?.access) {
-          localStorage.setItem('masroofy_access_token', res.data.access)
+          sessionStorage.setItem('masroofy_access_token', res.data.access)
           setIsAuthenticated(true)
         }
       }
@@ -146,5 +169,6 @@ const AuthGuard = ({ children }) => {
     </div>
   )
 }
+
 
 export default AuthGuard
