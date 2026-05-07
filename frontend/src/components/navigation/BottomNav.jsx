@@ -14,11 +14,11 @@ const BottomNav = () => {
   }, [])
 
   const navItems = [
-    { name: 'Home',    icon: Home,    path: '/' },
+    { name: 'Home', icon: Home, path: '/' },
     { name: 'History', icon: History, path: '/transactions' },
-    { name: 'Add',     icon: Plus,    special: true },
-    { name: 'Stats',   icon: PieChart, path: '/analytics' },
-    { name: 'Settings',icon: Settings, path: '/settings' },
+    { name: 'Add', icon: Plus, special: true },
+    { name: 'Stats', icon: PieChart, path: '/analytics' },
+    { name: 'Settings', icon: Settings, path: '/settings' },
   ]
 
   return (

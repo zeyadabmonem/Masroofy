@@ -12,14 +12,15 @@ import { Wallet } from 'lucide-react'
 import { clsx } from 'clsx'
 
 const CATEGORY_LABELS = {
-  FOOD: '🍔 Food',
-  TRANSPORT: '🚗 Transport',
-  SHOPPING: '🛍️ Shopping',
-  BILLS: '📄 Bills',
-  ENTERTAINMENT: '🎮 Entertainment',
-  EDUCATION: '📚 Education',
-  OTHER: '📦 Other',
+  FOOD: 'Food',
+  TRANSPORT: 'Transport',
+  SHOPPING: 'Shopping',
+  BILLS: 'Bills',
+  ENTERTAINMENT: 'Entertainment',
+  EDUCATION: 'Education',
+  OTHER: 'Other',
 }
+
 
 const groupByDate = (transactions) => {
   const groups = {}
@@ -140,9 +141,10 @@ const TransactionsPage = () => {
                 {txs.map((tx) => (
                   <Card key={tx.id} className="p-4 flex items-center justify-between group">
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-bg-elevated rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
-                        {CATEGORY_LABELS[tx.category]?.split(' ')[0]}
+                      <div className="w-12 h-12 bg-bg-elevated rounded-2xl flex items-center justify-center text-text-muted flex-shrink-0">
+                        <Wallet size={24} />
                       </div>
+
                       <div>
                         <p className="font-bold">{tx.note || CATEGORY_LABELS[tx.category]}</p>
                         <Badge variant="neutral">{CATEGORY_LABELS[tx.category]}</Badge>

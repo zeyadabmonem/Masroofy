@@ -10,7 +10,7 @@ export const securityService = {
   verifyPIN: async (pin) => {
     const data = await apiClient.post('/auth/pin/verify/', { pin })
     if (data?.data?.access) {
-      localStorage.setItem(TOKEN_KEY, data.data.access)
+      sessionStorage.setItem(TOKEN_KEY, data.data.access)
     }
     return data
   },
@@ -18,8 +18,9 @@ export const securityService = {
   changePIN: (old_pin, new_pin) => apiClient.post('/auth/pin/change/', { old_pin, new_pin }),
 
   logout: () => {
-    localStorage.removeItem(TOKEN_KEY)
+    sessionStorage.removeItem(TOKEN_KEY)
   },
 
-  isAuthenticated: () => !!localStorage.getItem(TOKEN_KEY),
+  isAuthenticated: () => !!sessionStorage.getItem(TOKEN_KEY),
 }
+

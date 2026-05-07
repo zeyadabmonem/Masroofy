@@ -28,6 +28,15 @@ class DailyLimitEngine:
 
     @staticmethod
     def get_cycle_status(cycle: BudgetCycle) -> str:
+        """
+        Determines the current status of a budget cycle based on today's date.
+        
+        Args:
+            cycle (BudgetCycle): The budget cycle to check.
+            
+        Returns:
+            str: One of 'PENDING', 'ACTIVE', or 'EXPIRED'.
+        """
         today = date.today()
         if today < cycle.start_date:
             return DailyLimitEngine.CYCLE_PENDING
@@ -37,19 +46,45 @@ class DailyLimitEngine:
 
     @staticmethod
     def remaining_days_inclusive(end_date) -> int:
-        """Days from today to end_date, inclusive of today. Min = 0."""
+        """
+        Calculates days from today to end_date, inclusive of today.
+        
+        Args:
+            end_date (date): The cycle's end date.
+            
+        Returns:
+            int: Remaining days count (minimum 0).
+        """
         today = date.today()
         delta = (end_date - today).days + 1
         return max(delta, 0)
 
     @staticmethod
     def total_days_inclusive(start_date, end_date) -> int:
-        """Total calendar days in the cycle, inclusive of both endpoints."""
+        """
+        Calculates total calendar days in the cycle, inclusive of both endpoints.
+        
+        Args:
+            start_date (date): The cycle's start date.
+            end_date (date): The cycle's end date.
+            
+        Returns:
+            int: Total days count.
+        """
         delta = (end_date - start_date).days + 1
         return max(delta, 0)
 
     @staticmethod
     def _get_total_spent(cycle: BudgetCycle) -> Decimal:
+        """
+        Aggregates the sum of all transaction amounts for a specific cycle.
+        
+        Args:
+            cycle (BudgetCycle): The cycle to aggregate transactions for.
+            
+        Returns:
+            Decimal: Total spent amount, quantized to 2 decimal places.
+        """
         result = Transaction.objects.filter(cycle=cycle).aggregate(total=Sum("amount"))
         return (result["total"] or Decimal("0.00")).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
@@ -57,9 +92,18 @@ class DailyLimitEngine:
     def compute_daily_limit(remaining_balance: Decimal, remaining_days: int) -> Decimal:
         """
         Computes the safe daily limit.
-        - If no remaining days → 0 (cycle expired)
-        - If balance is negative → 0 (overspent, cannot carry negative limit)
-        - If last day → remaining_balance (spend it all today)
+        
+        Logic:
+        - If no remaining days -> 0 (cycle expired)
+        - If balance is negative -> 0 (overspent)
+        - Otherwise -> remaining_balance / remaining_days
+        
+        Args:
+            remaining_balance (Decimal): Money left in the budget.
+            remaining_days (int): Days left in the cycle.
+            
+        Returns:
+            Decimal: The safe daily limit amount.
         """
         if remaining_days <= 0:
             return Decimal("0.00")
@@ -70,6 +114,25 @@ class DailyLimitEngine:
 
     @staticmethod
     def calculate(cycle: BudgetCycle) -> dict:
+        """
+        Performs a full calculation of all budget metrics for a given cycle.
+        
+        Args:
+            cycle (BudgetCycle): The cycle to calculate for.
+            
+        Returns:
+            dict: A dictionary containing:
+                - total_allowance (Decimal)
+                - total_spent (Decimal)
+                - remaining_balance (Decimal)
+                - remaining_days (int)
+                - total_days (int)
+                - days_elapsed (int)
+                - safe_daily_limit (Decimal)
+                - spending_percentage (Decimal)
+                - alert_level (str)
+                - cycle_status (str)
+        """
         today = date.today()
         status = DailyLimitEngine.get_cycle_status(cycle)
         total_allowance = Decimal(str(cycle.total_allowance))
@@ -118,9 +181,22 @@ class DailyLimitEngine:
 
 
 class BudgetService:
+    """
+    Service layer for budget cycle management.
+    """
+
     @staticmethod
     def create_cycle(user, data: dict) -> BudgetCycle:
-        """Deactivates all existing active cycles, then creates a fresh one."""
+        """
+        Deactivates all existing active cycles and creates a fresh one.
+        
+        Args:
+            user (User): The user owning the cycle.
+            data (dict): Dictionary containing total_allowance, start_date, and end_date.
+            
+        Returns:
+            BudgetCycle: The newly created cycle object.
+        """
         BudgetCycle.objects.filter(user=user, is_active=True).update(is_active=False)
         cycle = BudgetCycle.objects.create(
             user=user,
@@ -133,6 +209,18 @@ class BudgetService:
 
     @staticmethod
     def get_active_cycle(user) -> BudgetCycle:
+        """
+        Retrieves the current active budget cycle for a user.
+        
+        Args:
+            user (User): The user to query.
+            
+        Returns:
+            BudgetCycle: The active cycle.
+            
+        Raises:
+            ResourceNotFoundException: If no active cycle is found.
+        """
         try:
             return BudgetCycle.objects.get(user=user, is_active=True)
         except BudgetCycle.DoesNotExist:
@@ -140,10 +228,25 @@ class BudgetService:
 
     @staticmethod
     def get_cycle_summary(cycle: BudgetCycle) -> dict:
+        """
+        Gets a calculated summary for a cycle.
+        
+        Args:
+            cycle (BudgetCycle): The cycle to summarize.
+            
+        Returns:
+            dict: The calculated metrics dictionary.
+        """
         return DailyLimitEngine.calculate(cycle)
 
     @staticmethod
     def reset_cycle(cycle: BudgetCycle) -> None:
-        """Safely archives a cycle (marks inactive; all transaction history preserved)."""
+        """
+        Deactivates a cycle while preserving transaction history.
+        
+        Args:
+            cycle (BudgetCycle): The cycle to reset.
+        """
         cycle.is_active = False
         cycle.save()
+

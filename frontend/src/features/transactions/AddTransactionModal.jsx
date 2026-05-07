@@ -6,14 +6,15 @@ import Button from '../../components/ui/Button'
 import Input from '../../components/ui/Input'
 
 const CATEGORIES = [
-  { value: 'FOOD', label: '🍔 Food & Dining' },
-  { value: 'TRANSPORT', label: '🚗 Transportation' },
-  { value: 'SHOPPING', label: '🛍️ Shopping' },
-  { value: 'BILLS', label: '📄 Bills & Utilities' },
-  { value: 'ENTERTAINMENT', label: '🎮 Entertainment' },
-  { value: 'EDUCATION', label: '📚 Education' },
-  { value: 'OTHER', label: '📦 Other' },
+  { value: 'FOOD', label: 'Food & Dining' },
+  { value: 'TRANSPORT', label: 'Transportation' },
+  { value: 'SHOPPING', label: 'Shopping' },
+  { value: 'BILLS', label: 'Bills & Utilities' },
+  { value: 'ENTERTAINMENT', label: 'Entertainment' },
+  { value: 'EDUCATION', label: 'Education' },
+  { value: 'OTHER', label: 'Other' },
 ]
+
 
 const AddTransactionModal = () => {
   const { modal, closeModal } = useUIStore()

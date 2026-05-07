@@ -1,12 +1,13 @@
 export const EXPENSE_CATEGORIES = [
-  { value: 'FOOD', label: 'Food & Dining', icon: 'Utensils' },
-  { value: 'TRANSPORT', label: 'Transportation', icon: 'Car' },
-  { value: 'SHOPPING', label: 'Shopping', icon: 'ShoppingBag' },
-  { value: 'BILLS', label: 'Bills & Utilities', icon: 'FileText' },
-  { value: 'ENTERTAINMENT', label: 'Entertainment', icon: 'Film' },
-  { value: 'EDUCATION', label: 'Education', icon: 'BookOpen' },
-  { value: 'OTHER', label: 'Other', icon: 'MoreHorizontal' },
+  { value: 'FOOD', label: 'Food & Dining' },
+  { value: 'TRANSPORT', label: 'Transportation' },
+  { value: 'SHOPPING', label: 'Shopping' },
+  { value: 'BILLS', label: 'Bills & Utilities' },
+  { value: 'ENTERTAINMENT', label: 'Entertainment' },
+  { value: 'EDUCATION', label: 'Education' },
+  { value: 'OTHER', label: 'Other' },
 ]
+
 
 export const CATEGORY_COLORS = {
   FOOD: '#3B82F6',
